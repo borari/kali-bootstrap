@@ -1,5 +1,5 @@
 # Kali Bootstrapper w/ Ansible
->  Automation is our next year High Priority Objective, but we can't send commands to remote systems...
+>  Automation is our High Priority Objective, but we can't send commands to remote systems...
 
 These playbooks install most of the tools I have been using on Kali while participating in CTFs, HTB, PG, and the PWK labs. There are some tweaks for hardening, personalization, etc. I wanted to be able to sit down on a fresh VM and have everything set up in a way that I am immdediately comfortable with. Since I'm the only one using this, the "How To" section below will include the steps I use when setting up a Kali box, ie as root etc.
 I was heavily inspired by iesplin's ansible-playbook-kali (https://github.com/iesplin/ansible-playbook-kali. I recreated the files instead of just forking the repo so that I could better comprehend Ansible since this is my first time working with it.
