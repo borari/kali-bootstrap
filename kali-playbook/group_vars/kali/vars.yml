@@ -1,0 +1,242 @@
+---
+# Burp Suite settings
+burpsuite_cacert_path: "{{ burpsuite_extras_dir }}/PortSwigger_CA.der"
+burpsuite_extras_dir: "{{ kali_user_details.home }}/BurpSuiteExtras"
+burpsuite_user: "{{ kali_user }}"
+
+# Git repositories to clone to /opt
+# Various projects that are either not in Kali or are updated more freqently than Kali repos
+git_repos:
+  - name: BloodHound
+    repo: https://github.com/BloodHoundAD/BloodHound.git
+  - name: github-search
+    repo: https://github.com/gwen001/github-search
+  - name: nishang
+    repo: https://github.com/samratashok/nishang.git
+  - name: odat
+    repo: https://github.com/quentinhardy/odat.git
+  - name: phpggc
+    repo: https://github.com/ambionics/phpggc.git
+  - name: PowerSploit
+    repo: https://github.com/PowerShellMafia/PowerSploit.git
+  - name: privilege-escalation-awesome-scripts-suite
+    repo: https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git
+  - name: peda
+    repo: https://github.com/longld/peda.git
+  - name: wesng
+    repo: https://github.com/bitsadmin/wesng.git
+
+# Add any private repos you want here
+#private_repos:
+#  - name: repoName
+#    repo: git@github.com:private/repoName.git
+
+# apt packages to install
+kali_packages:
+  - awscli
+  - bloodhound
+  - cmake
+  - default-jdk
+  - docker.io
+  - docker-compose
+  - gdb
+  - ghidra
+  - gobuster
+  - golang-go
+  - htop
+  - irssi
+  - libimage-exiftool-perl
+  - libldns-dev
+  - libreoffice
+  - libssl-dev
+  - ltrace
+  - lz4
+  - massdns
+  - maven
+  - oscanner
+  - payloadsallthethings
+  - pypy
+  - python-setuptools
+  - python3-venv
+  - redis-tools
+  - seclists
+  - smtp-user-enum
+  - sipvicious
+  - tnscmd10g
+  - tree
+  - wireguard
+  - wkhtmltopdf
+  - xclip
+  - xrdp
+
+# Set as the user account that runs the ansible playbook
+kali_user: "{{ lookup('env','USER') }}"
+
+misc_downloads:
+  - url: https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy64
+    dest: /opt/pspy/pspy64
+    mode: '755'
+  - url: https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy64s
+    dest: /opt/pspy/pspy64s
+    mode: '755'
+# The files below are the fonts needed for the p10k ohmyzsh theme
+  - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+    dest: /usr/share/fonts/MesloLGS NF Regular.ttf
+    mode: '644'
+  - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+    dest: /usr/share/fonts/MesloLGS NF Bold.ttf
+    mode: '644'
+  - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+    dest: /usr/share/fonts/MesloLGS NF Italic.ttf
+    mode: '644' 
+  - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+    dest: /usr/share/fonts/MesloLGS NF Bold Italic.ttf
+    mode: '644'
+# Needed to install Python2 pip packages on Kali, old PoCs can be broken without this
+  - url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
+    dest: /opt/get-pip.py
+    mode: '750'
+
+# Requires shell install to pass ZSH env var to shell script when installing ohmyzsh
+shell_installs:
+  - cmd: ZSH=~/.local/share/oh-my-zsh sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    dest: ~/.local/share/oh-my-zsh/oh-my-zsh.sh
+
+# Should probably refactor the git clone to /opt loop to require dest path, then nest this git clone there
+cmd_installs:
+  - cmd: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.local/share/oh-my-zsh/custom/themes/powerlevel10k
+    dest: ~/.local/share/oh-my-zsh/custom/themes/powerlevel10k
+# Need to install pip2 for old PoCs to work properly
+  - cmd: python2 /opt/get-pip.py
+    dest: /usr/local/bin/pip2
+
+python_pip_packages:
+  - cffi
+  - dpkt
+  - scapy
+  
+python_pip3_packages:
+  - patator
+  - pipenv
+  - pipx
+  - poetry
+  - roadrecon
+
+python_pipx_packages:
+  - name: git+https://github.com/Tib3rius/AutoRecon.git
+    bin: "{{ kali_user_details.home }}/.local/bin/autorecon"
+  - name: droopescan
+    bin: "{{ kali_user_details.home }}/.local/bin/droopescan"
+  - name: pwntools
+    bin: "{{ kali_user_details.home }}/.local/bin/pwn"
+  - name: roadrecon
+    bin: "{{ kali_user_details.home }}/.local/bin/roadrecon"
+# Hard requirement for python 3.8.7 or something breaking this install
+  #- name: rsactftool
+  # bin: "{{ kali_user_details.home }}/.local/bin/rsactftoo"l
+  - name: xkcdpass
+    bin: "{{ kali_user_details.home }}/.local/bin/xkcdpass"
+  - name: xortool
+    bin: "{{ kali_user_details.home }}/.local/bin/xortool"
+
+ruby_gem_packages:
+  - winrm
+  - winrm-fs
+  - stringio
+  - evil-winrm
+
+# Extensions for VS Code
+vscode_extensions:
+  # Language extensions
+#  - ms-python.python
+#  - ms-vscode.cpptools
+#  - ms-vscode.powershell
+  # Utility extensions
+#  - esbenp.prettier-vscode
+
+config_files:
+  - name: .tmux.conf
+    src: files/tmux
+    dest: "{{ kali_user_details.home }}"
+    mode: '640'
+  - name: global-patterns.toml
+    src: files/autorecon
+    dest: "{{ kali_user_details.home }}/.config/AutoRecon"
+    mode: '640'
+  - name: port-scan-profiles.toml
+    src: files/autorecon
+    dest: "{{ kali_user_details.home }}/.config/AutoRecon"
+    mode: '640'
+  - name: service-scans.toml
+    src: files/autorecon
+    dest: "{{ kali_user_details.home }}/.config/AutoRecon"
+    mode: '640'
+  - name: .gdbinit
+    src: files/gdb
+    dest: "{{ kali_user_details.home }}"
+    mode: '640'
+  - name: .gitconfig
+    src: files/git
+    dest: "{{ kali_user_details.home }}"
+    mode: '640'
+  - name: .gitconfig.local
+    src: files/git
+    dest: "{{ kali_user_details.home }}"
+    mode: '640'
+  - name: .gitignore
+    src: files/git
+    dest: "{{ kali_user_details.home }}"
+    mode: '640'
+  - name: bumrush
+    src: files/scripts
+    dest: /usr/local/bin
+    mode: '755'
+  - name: extract
+    src: files/scripts
+    dest: /usr/local/bin
+    mode: '755'
+  - name: vimrc
+    src: files/vim
+    dest: "{{ kali_user_details.home }}/.config/vim"
+    mode: '640'
+  - name: wgetrc
+    src: files/wget
+    dest: "{{ kali_user_details.home }}/.config/wget"
+    mode: '640'
+  - name: .zshenv
+    src: files/zsh
+    dest: "{{ kali_user_details.home }}"
+    mode: '640'
+  - name: .zshrc
+    src: files/zsh
+    dest: "{{ kali_user_details.home }}/.config/zsh"
+    mode: '640'
+  - name: .zsh_paths
+    src: files/zsh
+    dest: "{{ kali_user_details.home }}/.config/zsh"
+    mode: '640'
+  - name: .zsh_aliases
+    src: files/zsh
+    dest: "{{ kali_user_details.home }}/.config/zsh"
+    mode: '640'
+  - name: .zsh_autocomp
+    src: files/zsh
+    dest: "{{ kali_user_details.home }}/.config/zsh"
+    mode: '640'
+  - name: .zsh_functions
+    src: files/zsh
+    dest: "{{ kali_user_details.home }}/.config/zsh"
+    mode: '640'
+  - name: p10k.sh
+    src: files/zsh
+    dest: "{{ kali_user_details.home }}/.config/zsh"
+    mode: '640'
+
+delete_files:
+# files deleted from ~/ because locations updated to ~/.config/ to respect XDG pathing
+  - "{{ kali_user_details.home }}/.zsh_history"
+  - "{{ kali_user_details.home }}/.zshrc"
+  - "{{ kali_user_details.home }}/.zshrc.pre-oh-my-zsh"
+  - "{{ kali_user_details.home }}/.bashrc"
+  - "{{ kali_user_details.home }}/.bashrc.original"
+  - /opt/get-pip.py

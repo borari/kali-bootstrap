@@ -1,0 +1,70 @@
+---
+# Playbook for Kali
+
+## Personalize Kali
+- hosts: kali
+  become: true
+  become_user: "{{ kali_user }}"
+  tasks:
+    - name: Ensure local directories exist
+      ansible.builtin.file:
+        path: "{{ kali_user_details.home }}/{{ item }}"
+        state: directory
+        owner: "{{ kali_user }}"
+        group: "{{ kali_user_details.group }}"
+        mode: '750'
+      loop:
+        - ".local/bin"
+
+    # Copy files
+    - name: Ensure destination directories exist
+      ansible.builtin.file:
+        dest: "{{ item.dest }}"
+        state: directory
+        owner: "{{ kali_user }}"
+        group: "{{ kali_user }}"
+        mode: '750'
+      loop: "{{ config_files }}"
+
+    - name: Copy files
+      ansible.builtin.copy:
+        src: "{{ item.src }}/{{ item.name }}"
+        dest: "{{ item.dest }}/{{ item.name }}"
+        mode: "{{ item.mode }}"
+      loop: "{{ config_files }}"
+
+    # Firefox personalization
+    - name: Set firefox_default_profile_dir fact
+      ansible.builtin.set_fact:
+        firefox_default_profile_dir: "{{ kali_user_details.home }}/.mozilla/firefox/hacker.default-esr"
+
+    - name: Check if Firefox profile exists
+      ansible.builtin.stat:
+        path: "{{ firefox_default_profile_dir }}"
+      register: firefox_profile
+
+#    - name: Create FireFox default profile
+#      ansible.builtin.command: "firefox-esr -CreateProfile \"hacker {{ firefox_default_profile_dir }}\""
+#      when: not firefox_profile.stat.exists
+
+#    - name: Copy Firefox ini files
+#      ansible.builtin.copy:
+#        src: "files/firefox/{{ item }}"
+#        dest: "{{ kali_user_details.home }}/.mozilla/firefox/{{ item }}"
+#        mode: 0640
+#      loop:
+#        - installs.ini
+#        - profiles.ini
+
+#    - name: Copy user.js from quieter-firefox
+#      ansible.builtin.copy:
+#        src: /opt/quieter-firefox/user.js
+#        dest: "{{ firefox_default_profile_dir }}/user.js"
+#        remote_src: true
+
+    # Installation Cleanup
+    - name: Clean up litter and default files
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop: "{{ delete_files }}"
