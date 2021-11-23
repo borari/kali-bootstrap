@@ -31,7 +31,7 @@ How to use
 	```
 - Clone the repo
 	```bash
-	git clone git@github.com:borari/kali-bootstrap-ansible-public.git
+	git clone https://github.com/borari/kali-bootstrap.git
 	```
 - Run the deploy script
 	```bash
