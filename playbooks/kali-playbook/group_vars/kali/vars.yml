@@ -81,16 +81,16 @@ misc_downloads:
     mode: '755'
 # The files below are the fonts needed for the p10k ohmyzsh theme
   - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
-    dest: /usr/share/fonts/MesloLGS NF Regular.ttf
+    dest: ~/.local/share/fonts/MesloLGS-NF-Regular.ttf
     mode: '644'
   - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
-    dest: /usr/share/fonts/MesloLGS NF Bold.ttf
+    dest: ~/.local/share/fonts/MesloLGS-NF-Bold.ttf
     mode: '644'
   - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
-    dest: /usr/share/fonts/MesloLGS NF Italic.ttf
+    dest: ~/.local/share/fonts/MesloLGS-NF-Italic.ttf
     mode: '644' 
   - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
-    dest: /usr/share/fonts/MesloLGS NF Bold Italic.ttf
+    dest: ~/.local/share/fonts/MesloLGS-NF-Bold-Italic.ttf
     mode: '644'
 # Needed to install Python2 pip packages on Kali, old PoCs can be broken without this
   - url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
