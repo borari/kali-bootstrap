@@ -14,6 +14,11 @@ How to use
 	sudo passwd root
 	```
 - Log out of user Kali, log back in with user root
+- Ensure all installed packages are upgraded. Fix any issues with packages or dependencies before running the deploy script.
+        ```bash
+        apt update
+        apt upgrade
+        ```
 - Enable root login over SSH, then enable/start the SSH server
 	```bash
 	sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
@@ -41,8 +46,8 @@ How to use
 
 Author
 -------
-borari
-iesplin (fork source)
+- borari
+- iesplin (fork source)
 
 License
 -------
