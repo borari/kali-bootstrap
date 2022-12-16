@@ -28,8 +28,9 @@ git_repos:
 
 # Add any private repos you want here
 #private_repos:
-#  - name: repoName
-#    repo: git@github.com:private/repoName.git
+  #- name: 
+  #  repo: 
+  #  version: 
 
 # apt packages to install
 kali_packages:
@@ -37,6 +38,7 @@ kali_packages:
   - bloodhound
   - cmake
   - default-jdk
+  - dkms
   - docker.io
   - docker-compose
   - gdb
@@ -49,14 +51,15 @@ kali_packages:
   - libldns-dev
   - libreoffice
   - libssl-dev
+  - linux-headers-generic
   - ltrace
   - lz4
   - massdns
   - maven
+  - mingw-w64
   - oscanner
   - payloadsallthethings
-  - pypy
-  - python-setuptools
+  - pypy3
   - python3-venv
   - redis-tools
   - seclists
@@ -72,6 +75,7 @@ kali_packages:
 # Set as the user account that runs the ansible playbook
 kali_user: "{{ lookup('env','USER') }}"
 
+# Add any files raw files you want downloaded here
 misc_downloads:
   - url: https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy64
     dest: /opt/pspy/pspy64
@@ -79,43 +83,56 @@ misc_downloads:
   - url: https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy64s
     dest: /opt/pspy/pspy64s
     mode: '755'
-# The files below are the fonts needed for the p10k ohmyzsh theme
-  - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
-    dest: ~/.local/share/fonts/MesloLGS-NF-Regular.ttf
-    mode: '644'
-  - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
-    dest: ~/.local/share/fonts/MesloLGS-NF-Bold.ttf
-    mode: '644'
-  - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
-    dest: ~/.local/share/fonts/MesloLGS-NF-Italic.ttf
-    mode: '644' 
-  - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
-    dest: ~/.local/share/fonts/MesloLGS-NF-Bold-Italic.ttf
-    mode: '644'
-# Needed to install Python2 pip packages on Kali, old PoCs can be broken without this
+# Needed to install python2 pip packages on Kali, old PoCs can be broken without this
   - url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
-    dest: /opt/get-pip.py
+    dest: /opt/pip2/get-pip.py
     mode: '750'
+# Files below are fonts needed for teh p10k ohmyzsh theme
+  - url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
+    dest: /usr/share/fonts/truetype/hacknf/Hack-Regular-NF.ttf
+    mode: '644'
+  - url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
+    dest: /usr/share/fonts/truetype/hacknf/Hack-Regular-Mono-NF.ttf
+    mode: '644'
+  - url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete.ttf
+    dest: /usr/share/fonts/truetype/hacknf/Hack-Italic-NF.ttf
+    mode: '644'
+  - url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete%20Mono.ttf
+    dest: /usr/share/fonts/truetype/hacknf/Hack-Italic-Mono-NF.ttf
+    mode: '644'
+  - url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete.ttf
+    dest: /usr/share/fonts/truetype/hacknf/Hack-BoldItalic-NF.ttf
+    mode: '644'
+  - url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete%20Mono.ttf
+    dest: /usr/share/fonts/truetype/hacknf/Hack-BoldItalic-Mono-NF.ttf
+    mode: '644'
+  - url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete.ttf
+    dest: /usr/share/fonts/truetype/hacknf/Hack-Bold-NF.ttf
+    mode: '644'
+  - url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
+    dest: /usr/share/fonts/truetype/hacknf/Hack-Bold-Mono-NF.ttf
+    mode: '644'
 
 # Requires shell install to pass ZSH env var to shell script when installing ohmyzsh
 shell_installs:
   - cmd: ZSH=~/.local/share/oh-my-zsh sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     dest: ~/.local/share/oh-my-zsh/oh-my-zsh.sh
 
-# Should probably refactor the git clone to /opt loop to require dest path, then nest this git clone there
+# Add anything installed via cli here
 cmd_installs:
   - cmd: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.local/share/oh-my-zsh/custom/themes/powerlevel10k
     dest: ~/.local/share/oh-my-zsh/custom/themes/powerlevel10k
-# Need to install pip2 for old PoCs to work properly
-  - cmd: python2 /opt/get-pip.py
+  - cmd: python2 /opt/pip2/get-pip.py
     dest: /usr/local/bin/pip2
 
 python_pip_packages:
+  - setuptools
   - cffi
   - dpkt
   - scapy
   
 python_pip3_packages:
+  - setuptools
   - patator
   - pipenv
   - pipx
@@ -131,13 +148,12 @@ python_pipx_packages:
     bin: "{{ kali_user_details.home }}/.local/bin/pwn"
   - name: roadrecon
     bin: "{{ kali_user_details.home }}/.local/bin/roadrecon"
-# Hard requirement for python 3.8.7 or something breaking this install
-  #- name: rsactftool
-  # bin: "{{ kali_user_details.home }}/.local/bin/rsactftoo"l
   - name: xkcdpass
     bin: "{{ kali_user_details.home }}/.local/bin/xkcdpass"
   - name: xortool
     bin: "{{ kali_user_details.home }}/.local/bin/xortool"
+  - name: oletools
+    bin: "{{ kali_user_details.home }}/.local/bin/olevba"
 
 ruby_gem_packages:
   - winrm
@@ -145,18 +161,18 @@ ruby_gem_packages:
   - stringio
   - evil-winrm
 
-# Extensions for VS Code
-vscode_extensions:
-  # Language extensions
-#  - ms-python.python
-#  - ms-vscode.cpptools
-#  - ms-vscode.powershell
-  # Utility extensions
-#  - esbenp.prettier-vscode
-
+# Add any files you want copied into a new location here
 config_files:
   - name: .tmux.conf
     src: files/tmux
+    dest: "{{ kali_user_details.home }}"
+    mode: '640'
+  - name: .tmux.conf.local
+    src: files/tmux
+    dest: "{{ kali_user_details.home }}"
+    mode: '640'
+  - name: .gdbinit
+    src: files/gdb
     dest: "{{ kali_user_details.home }}"
     mode: '640'
   - name: global-patterns.toml
@@ -171,19 +187,15 @@ config_files:
     src: files/autorecon
     dest: "{{ kali_user_details.home }}/.config/AutoRecon"
     mode: '640'
-  - name: .gdbinit
-    src: files/gdb
-    dest: "{{ kali_user_details.home }}"
-    mode: '640'
   - name: .gitconfig
     src: files/git
     dest: "{{ kali_user_details.home }}"
     mode: '640'
-  - name: .gitconfig.local
+  - name: .gitignore
     src: files/git
     dest: "{{ kali_user_details.home }}"
     mode: '640'
-  - name: .gitignore
+  - name: .gitconfig.local
     src: files/git
     dest: "{{ kali_user_details.home }}"
     mode: '640'
@@ -211,6 +223,10 @@ config_files:
     src: files/zsh
     dest: "{{ kali_user_details.home }}/.config/zsh"
     mode: '640'
+  - name: .localrc
+    src: files/zsh
+    dest: "{{ kali_user_details.home }}/.config/zsh"
+    mode: '640'
   - name: .zsh_paths
     src: files/zsh
     dest: "{{ kali_user_details.home }}/.config/zsh"
@@ -233,10 +249,8 @@ config_files:
     mode: '640'
 
 delete_files:
-# files deleted from ~/ because locations updated to ~/.config/ to respect XDG pathing
   - "{{ kali_user_details.home }}/.zsh_history"
   - "{{ kali_user_details.home }}/.zshrc"
   - "{{ kali_user_details.home }}/.zshrc.pre-oh-my-zsh"
   - "{{ kali_user_details.home }}/.bashrc"
   - "{{ kali_user_details.home }}/.bashrc.original"
-  - /opt/get-pip.py

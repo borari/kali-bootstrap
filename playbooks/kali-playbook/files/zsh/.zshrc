@@ -21,14 +21,11 @@ compinit
 
 [[ ! -f $ZDOTDIR/.zsh_autocomp ]] || source $ZDOTDIR/.zsh_autocomp	# load completions
 
-[[ ! -f $ZDOTDIR/.zsf_functions ]] || source $ZDOTDIR/.zsh_functions	# load functions
+[[ ! -f $ZDOTDIR/.zsh_functions ]] || source $ZDOTDIR/.zsh_functions	# load functions
 
 ############################################################################################
+# zsh general config settings
 export TERM=xterm-256color
-
-HISTFILE="$XDG_DATA_HOME/zsh/zsh_history"
-HISTSIZE=100000
-SAVEHIST=200000
 ZSH_THEME="powerlevel10k/powerlevel10k"
 HYPHEN_INSENSITIVE="true"       # If true _ and - will be interchangeable.
 WORDCHARS=${WORDCHARS//\/}      # Don't consider certain characters part of the word
@@ -70,3 +67,13 @@ plugins=(git)
 if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
+
+# Command History Settings
+# Keep below oh-my-zsh source or omz will overwrite these values
+HISTFILE="$XDG_DATA_HOME/zsh/zsh_history"
+HISTSIZE=999999999
+SAVEHIST=999999999
+export HISTTIMEFORMAT="[%F %T] "	# set time format
+setopt EXTENDED_HISTORY 		# save timestamp to history
+#setopt INC_APPEND_HISTORY		# add commands to history immediately
+setopt HIST_FIND_NO_DUPS		# dupe cmds filtered out when stepping through
