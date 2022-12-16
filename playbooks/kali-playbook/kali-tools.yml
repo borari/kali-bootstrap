@@ -27,23 +27,23 @@
 
     # Only uncomment this section if you have added repos into the private_repos list
     # Private git repos
-#    - name: Ensure destination directory exists
-#      ansible.builtin.file:
-#        dest: "{{ kali_user_details.home }}/Projects"
-#        state: directory
-#        owner: root
-#        group: root
-#        mode: '750'
-#
-#    - name: Clone private git repos
-#      ansible.builtin.git:
-#        repo: "{{ item.repo }}"
-#        dest: "{{ kali_user_details.home }}/Projects/{{ item.name }}"
-#        version: "{{ item.version | default('master') }}"
-#        depth: 1
-#        force: true
-#        key_file: "{{ kali_user_details.home }}/.ssh/id_rsa"
-#      loop: "{{ private_repos | flatten(levels=1) }}"
+    #- name: Ensure destination directory exists
+    #  ansible.builtin.file:
+    #    dest: "{{ kali_user_details.home }}/Projects"
+    #    state: directory
+    #    owner: root
+    #    group: root
+    #    mode: '750'
+
+    #- name: Clone private git repos
+    #  ansible.builtin.git:
+    #    repo: "{{ item.repo }}"
+    #    dest: "{{ kali_user_details.home }}/Projects/{{ item.name }}"
+    #    version: "{{ item.version | default('master') }}"
+    #    depth: 1
+    #    force: true
+    #    key_file: "{{ kali_user_details.home }}/.ssh/id_rsa"
+    #  loop: "{{ private_repos | flatten(levels=1) }}"
 
     # Miscellaneous tools
     - name: Ensure destination directory exists
@@ -75,8 +75,3 @@
         cmd: "{{ item.cmd }}"
         creates: "{{ item.dest }}"
       loop: "{{ cmd_installs }}"
-
-    - name: Install Python2 Pip packages
-      ansible.builtin.command:
-        cmd: "python2 -m pip install {{ item }}"
-      loop: "{{ python_pip_packages }}"
