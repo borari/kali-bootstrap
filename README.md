@@ -51,7 +51,8 @@ How to use
 Author
 -------
 -- borari
--- iesplin (fork source)
+
+-- iesplin (fork source: https://github.com/iesplin/ansible-playbook-kali)
 
 License
 -------
