@@ -37,6 +37,11 @@
       ansible.builtin.apt:
         autoclean: true
 
+    - name: Install Python2 Pip packages
+      ansible.builtin.command:
+        cmd: "python2 -m pip install {{ item }}"
+      loop: "{{ python_pip_packages }}"
+
     - name: Install Python3 Pip packages
       ansible.builtin.pip:
         name: "{{ item }}"
