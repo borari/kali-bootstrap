@@ -43,25 +43,6 @@
         path: "{{ firefox_default_profile_dir }}"
       register: firefox_profile
 
-#    - name: Create FireFox default profile
-#      ansible.builtin.command: "firefox-esr -CreateProfile \"hacker {{ firefox_default_profile_dir }}\""
-#      when: not firefox_profile.stat.exists
-
-#    - name: Copy Firefox ini files
-#      ansible.builtin.copy:
-#        src: "files/firefox/{{ item }}"
-#        dest: "{{ kali_user_details.home }}/.mozilla/firefox/{{ item }}"
-#        mode: 0640
-#      loop:
-#        - installs.ini
-#        - profiles.ini
-
-#    - name: Copy user.js from quieter-firefox
-#      ansible.builtin.copy:
-#        src: /opt/quieter-firefox/user.js
-#        dest: "{{ firefox_default_profile_dir }}/user.js"
-#        remote_src: true
-
     # Installation Cleanup
     - name: Clean up litter and default files
       ansible.builtin.file:
