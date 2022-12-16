@@ -71,4 +71,4 @@ alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 
 # zsh
-alias reload!=". $~/.config/zsh/.zshrc"
+alias reload!=". ~/.config/zsh/.zshrc"
