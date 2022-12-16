@@ -1,7 +1,3 @@
-# Make directory then cd into it
-mkcd() {
-        mkdir -p -- "$1" && cd -P -- "$1"
-
 # Allows for colored output after pipe
 # https://wiki.archlinux.org/index.php/Color_output_in_console
 zmodload zsh/zpty
@@ -21,4 +17,16 @@ pty() {
 
 ptytee() {
         pty $1 | tee -a $2
+}
 
+# Does powershell (unicode) b64 encoding of string
+# Usage: ps-encode [string]
+ps-encode() {
+	text="$1" pwsh -command '$bytes = [System.Text.Encoding]::Unicode.GetBytes($env:text); $enc = [Convert]::ToBase64String($bytes); $enc'
+}
+
+# Does powershell (unicode) b64 decode of string
+# Usage: ps-decode [encoded string]
+ps-decode() {
+	text="$1" pwsh -command '$enc = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($env:text)); $enc'
+}
