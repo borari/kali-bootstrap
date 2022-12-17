@@ -247,6 +247,10 @@ config_files:
     src: files/zsh
     dest: "{{ kali_user_details.home }}/.config/zsh"
     mode: '640'
+  - name: UserConfigCommunity.json
+    src: files/burp
+    dest: "{{ kali_user_details.home }}/.BurpSuite"
+    mode: '640'
 
 delete_files:
   - "{{ kali_user_details.home }}/.zsh_history"
