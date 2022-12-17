@@ -75,3 +75,9 @@
         cmd: "{{ item.cmd }}"
         creates: "{{ item.dest }}"
       loop: "{{ cmd_installs }}"
+
+    - name: Install Python2 Pip packages
+      ansible.builtin.command:
+        cmd: "python2 -m pip install {{ item }}"
+      loop: "{{ python_pip_packages }}"
+
