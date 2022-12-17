@@ -58,6 +58,7 @@ kali_packages:
   - maven
   - mingw-w64
   - oscanner
+  - patator
   - payloadsallthethings
   - pypy3
   - python3-venv
@@ -133,7 +134,6 @@ python_pip_packages:
   
 python_pip3_packages:
   - setuptools
-  - patator
   - pipenv
   - pipx
   - poetry
