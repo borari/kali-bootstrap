@@ -126,14 +126,10 @@ cmd_installs:
     dest: /usr/local/bin/pip2
 
 python_pip_packages:
-  - name: setuptools
-    creates: "/usr/local/lib/python2.7/dist-packages/setuptools"
-  - name: cffi
-    creates: "/usr/lib/python2.7/dist-packages/cffi"
-  - name: dpkt
-    creates: "/usr/lib/python2.7/dist-packages/cffi"
-  - name: scapy
-    creates: "/usr/local/lib/python2.7/dist-packages/scapy"
+  - setuptools
+  - cffi
+  - dpkt
+  - scapy
   
 python_pip3_packages:
   - setuptools
