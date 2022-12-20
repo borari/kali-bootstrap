@@ -72,6 +72,7 @@ kali_packages:
   - wkhtmltopdf
   - xclip
   - xrdp
+  - xxd
 
 # Set as the user account that runs the ansible playbook
 kali_user: "{{ lookup('env','USER') }}"
