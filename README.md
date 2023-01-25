@@ -1,13 +1,31 @@
 # Kali Bootstrapper w/ Ansible
->  Automation is our next year High Priority Objective, but we can't send commands to remote systems...
+This script will install Ansible on a fresh Kali machine, then download and execute the borari.pentesting_collection from Ansible Galaxy.
 
-These playbooks install most of the tools I have been using on Kali while participating in CTFs, HTB, PG, and the PWK labs. There are some tweaks for hardening, personalization, etc. I wanted to be able to sit down on a fresh VM and have everything set up in a way that I am immdediately comfortable with. Since I'm the only one using this, the "How To" section below will include the steps I use when setting up a Kali box, ie as root etc.
+The collection installs and configures most of the tools I have been using while participating in CTFs, HTB, PG, and the PWK labs. There are some tweaks for hardening, personalization, etc.
 
-How to use
+I wanted to be able to sit down on a fresh VM and have all my tools and preferred environment set up easily. This script allows for that with a single command after cloning.
+
+The Ansible Galaxy collection is built to only use `sudo` for required tasks, and will ask for the `sudo` password prior to execution. All user configuration will occur in the context of the user executing the script. The How To Use section below will work while running as root, kali, or any other user.
+
+How To Use
 -------
 
-- Install Kali using the default install. This can be a VM image, VM installed from iso, bare-metal, or anything else
-- Log in with the default 'kali/kali' credentials
+- Clone the repo
+        ```bash
+        git clone https://github.com/borari/kali-bootstrap.git
+        ```
+- Run the deploy script
+        ```bash
+        cd kali-bootstrap-ansible
+        ./deploy-kali.sh
+        ```
+
+Optional Instructions
+-------
+
+These instructions are not necessary. They are included in case you want to run as root on Kali but don't want to commit the following steps to memory.
+
+- Log in with the default Kali installation
 - Ensure Kali is fully upgraded
     ```bash
     sudo apt update
@@ -22,13 +40,7 @@ How to use
     ```bash
     sudo reboot now
     ```
-- Log in with user root
-- Enable root login over SSH, then enable/start the SSH server
-	```bash
-	sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-	systemctl enable ssh
-	systemctl start ssh
-	```
+- Log in as root
 - Remove user Kali
 	```bash
 	userdel -r kali
@@ -51,8 +63,6 @@ How to use
 Author
 -------
 - borari
-
-- iesplin (fork source: https://github.com/iesplin/ansible-playbook-kali)
 
 License
 -------

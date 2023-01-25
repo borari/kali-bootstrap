@@ -24,21 +24,15 @@ if ! command -v ansible >/dev/null; then
 fi
 
 echo -e "\n[+] Installing required Ansible collections\n"
-ansible-galaxy collection install --upgrade -r playbooks/kali-playbook/requirements.yml
+ansible-galaxy collection install --upgrade community.general
+ansible-galaxy collection install --upgrade borari.pentesting_collection
 if [ $? -gt 0 ]; then
     echo "[!] Error occurred when attempting to install Ansible collections."
     exit 1
 fi
 
-echo -e "\n[+] Downloading required roles\n"
-ansible-galaxy role install --force -r playbooks/kali-playbook/requirements.yml
-if [ $? -gt 0 ]; then
-    echo "[!] Error occurred when attempting to download Ansible roles."
-    exit 1    
-fi
-
-echo -e "\n[+] Running Kali bootstrap playbooks\n"
-ansible-playbook -i inventory --ask-become-pass playbooks/kali-playbook/main.yml
+echo -e "\n[+] Running Kali bootstrap playbook\n"
+ansible-playbook borari.pentesting_collection.site.yml -i ~/.ansible/collections/ansible_collections/borari/pentesting_collection/playbooks/inventory --ask-become-pass --vault-id ~/.ansible_password
 if [ $? -gt 0 ]; then
     echo "[!] Error occurred during playbook run."
     exit 1    
