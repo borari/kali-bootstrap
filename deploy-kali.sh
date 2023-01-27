@@ -24,15 +24,16 @@ if ! command -v ansible >/dev/null; then
 fi
 
 echo -e "\n[+] Installing required Ansible collections\n"
-ansible-galaxy collection install --upgrade community.general
-ansible-galaxy collection install --upgrade borari.pentesting_collection
+# explicity declare path since ~/.local/bin isn't in Ubuntu's PATH by default...
+~/.local/bin/ansible-galaxy collection install --upgrade borari.pentesting_collection
 if [ $? -gt 0 ]; then
     echo "[!] Error occurred when attempting to install Ansible collections."
     exit 1
 fi
 
 echo -e "\n[+] Running Kali bootstrap playbook\n"
-ansible-playbook borari.pentesting_collection.site.yml -i ~/.ansible/collections/ansible_collections/borari/pentesting_collection/playbooks/inventory --ask-become-pass --vault-id ~/.ansible_password
+# if targeting xubuntu, update playbook to 'borari.pentesting_collection.xubuntu.yml' and change inventory file to 'xubuntu'
+~/.local/bin/ansible-playbook borari.pentesting_collection.kali.yml -i ~/.ansible/collections/ansible_collections/borari/pentesting_collection/playbooks/inventory/kali -e 'target=kali' --ask-become-pass --vault-id ~/.ansible_password
 if [ $? -gt 0 ]; then
     echo "[!] Error occurred during playbook run."
     exit 1    
