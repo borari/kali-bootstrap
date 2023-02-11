@@ -32,7 +32,9 @@ if [ $? -gt 0 ]; then
 fi
 
 echo -e "\n[+] Running Kali bootstrap playbook\n"
-# if targeting xubuntu, update playbook to 'borari.pentesting_collection.xubuntu.yml' and change inventory file to 'xubuntu'
+# if targeting xubuntu, uncomment the line below
+#~/.local/bin/ansible-playbook borari.pentesting_collection.xubuntu.yml -i ~/.ansible/collections/ansible_collections/borari/pentesting_collection/playbooks/inventory/xubuntu -e 'target=xubuntu' --ask-become-pass
+# if targeting kali, uncomment the line below
 ~/.local/bin/ansible-playbook borari.pentesting_collection.kali.yml -i ~/.ansible/collections/ansible_collections/borari/pentesting_collection/playbooks/inventory/kali -e 'target=kali' --ask-become-pass --vault-id ~/.ansible_password
 if [ $? -gt 0 ]; then
     echo "[!] Error occurred during playbook run."
