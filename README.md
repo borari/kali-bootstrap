@@ -7,7 +7,7 @@ I wanted to be able to sit down on a fresh VM and have all my tools and preferre
 
 The Ansible Galaxy collection is built to only use `sudo` for required tasks, and will ask for the `sudo` password prior to execution. All user configuration will occur in the context of the user executing the script. The How To Use section below will work while running as root, kali, or any other user.
 
-You can view the leveraged collection [on Galaxy here](https://galaxy.ansible.com/borari/pentesting_collection), or you can take a look [at the source code directly](https://github.com/borari/pentesting_collection).
+You can view the leveraged collection [on Ansible Galaxy](https://galaxy.ansible.com/borari/pentesting_collection), or you can take a look [at the source code directly](https://github.com/borari/pentesting_collection).
 
 How To Use
 -------
