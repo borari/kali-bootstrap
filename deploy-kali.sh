@@ -15,7 +15,7 @@ fi
 
 if ! command -v ansible >/dev/null; then
     echo "[+] Installing Ansible"
-    sudo apt-get install ansible
+    sudo apt-get install ansible-core
     if [ $? -gt 0 ]; then
         echo "[!] Error occurred when attempting to install Ansible."
         exit 1
